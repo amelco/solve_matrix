@@ -64,7 +64,7 @@ void printMenu() {
     printf("\n\n");
 }
 
-// imprime a matriz (em implementação...)
+// imprime a matriz
 void printMatriz(int coef[][50], int n_lin, int n_col) {
     system("clear");
     printf("Matriz aumentada (%d x %d)\n\n", n_lin, n_col);
