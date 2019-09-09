@@ -9,6 +9,8 @@ void printMatriz(int coef[][50], int n_lin, int n_col);
 void askCoeficientes(int numEq, int coef[][50]);
 int countVars(char line[], int coefs[]);
 void str_trim(char* dest, char* source);
+void escalonar(int num_lin, int num_col, int A[num_lin][num_col], int result[][]);
+void move_linha(int dest[][], int line_dest, int line_source, int source[][]); // interna
 
 /* **** variáveis globais **** */
 char opcao = ' ';       // opção escolhida pelo usuario
@@ -34,11 +36,19 @@ int main() {
             printf("Quantas equações tem o sistema?\n");
             scanf("%d", &g_numEq);
             askCoeficientes(g_numEq, coef);
+        
+        }
+        else if (opcao == '2') {
+            askCoeficientes(g_numEq, coef);
         }
         else if (opcao == '3') {
             printHeader();
             printMatriz(coef, g_numEq, g_numVar);
+            printf("Pressione qualquer tecla para voltar ao menu\n");
             scanf(" %c", &dummy);
+
+        }
+        else if (opcao == '4') {
 
         }
         else if (opcao == 'q') break;
@@ -55,10 +65,15 @@ void printHeader() {
 
 // Imprime o menu do programa
 void printMenu() {
+    printf("\nMENU\n");
     printf("------------------------------------------\n");
     printf("1. Definir número de equações\n");
-    printf("2. Digitar coeficientes das equações\n");
-    if (g_hasEq == 1) printf("3. Mostrar matriz\n");
+    if (g_hasEq == 1) {
+        printf("2. Digitar coeficientes das equações\n");
+        printf("3. Mostrar matriz\n");
+        printf("4. Escalonar matriz\n");
+        printf("5. Reduzir matriz\n");
+    }
     printf("\n\nq. Sair\n");
     printf("------------------------------------------");
     printf("\n\n");
@@ -69,13 +84,13 @@ void printMatriz(int coef[][50], int n_lin, int n_col) {
     system("clear");
     printf("Matriz aumentada (%d x %d)\n\n", n_lin, n_col);
     int i, j;
-    for (i=0; i<n_lin; i++)
+    for (i=0; i<n_lin; i++) {
+        printf("|");
         for (j=0; j<n_col; j++) {
-            // printf("[%d %d] ", i, j);
-            if (j == 0) printf("|");
             printf("%d ", coef[i][j]);
-            if (j == n_col-1) printf("\b|\n");
         }
+        printf("\b|\n");
+    }
 }
 
 // pergunta ao usuario os coeficientes das equações
@@ -94,7 +109,7 @@ void askCoeficientes(int numEq, int coef[][50]) {
             coef[i][j] = l_coef[j];
         }
 
-        // seta existe equações para 1
+        // diz que existem equacoes definidas pelo usuario
         g_hasEq = 1;
     }
 }
@@ -157,4 +172,15 @@ void str_trim(char* dest, char* source){
         }
         is++;
     }
+}
+
+void escalonar(int num_lin, int num_col, int A[num_lin][num_col], int result[][]) {
+    int i, j;
+    int temp[num_col];
+    //verificar se 1o elemento da primeira linha é zero
+    if (A[0][0] == 0) move_linha(A, 1, 0, A);
+    if (A[1][0] != 1) {
+        for (i=0; i<num_col; i++) 
+            temp[i] = A[0][i]*(-A[1][i]) + A[1][i];
+        } 
 }
