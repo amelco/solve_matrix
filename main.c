@@ -9,8 +9,8 @@ void printMatriz(int coef[][50], int n_lin, int n_col);
 void askCoeficientes(int numEq, int coef[][50]);
 int countVars(char line[], int coefs[]);
 void str_trim(char* dest, char* source);
-void escalonar(int num_lin, int num_col, int A[num_lin][num_col], int result[][]);
-void move_linha(int dest[][], int line_dest, int line_source, int source[][]); // interna
+void escalonar(int num_lin, int num_col, int A[num_lin][num_col], int result[num_lin][num_col]);
+// void move_linha(int dest[][], int line_dest, int line_source, int source[][]); // interna
 
 /* **** variáveis globais **** */
 char opcao = ' ';       // opção escolhida pelo usuario
@@ -23,6 +23,7 @@ int g_numVar = 0;       // numero de variaveis
 int main() {
     int i, j;
     int coef[50][50];   // matriz com os coeficientes das equações
+    int res[50][50];    // matriz auxiliar
 
     // loop infinito (até usuário pressionar 'q')
     while(1) {
@@ -49,6 +50,11 @@ int main() {
 
         }
         else if (opcao == '4') {
+            printHeader();
+            escalonar(g_numEq, g_numVar, coef, res);
+            printMatriz(res, g_numEq, g_numVar);
+            printf("Pressione qualquer tecla para voltar ao menu\n");
+            scanf(" %c", &dummy);
 
         }
         else if (opcao == 'q') break;
@@ -174,11 +180,14 @@ void str_trim(char* dest, char* source){
     }
 }
 
-void escalonar(int num_lin, int num_col, int A[num_lin][num_col], int result[][]) {
+void escalonar(int num_lin, int num_col, int A[num_lin][num_col], int result[num_lin][num_col]) {
     int i, j;
     int temp[num_col];
     //verificar se 1o elemento da primeira linha é zero
-    if (A[0][0] == 0) move_linha(A, 1, 0, A);
+    if (A[0][0] == 0) {
+        printf("move linha\n");
+        // move_linha(A, 1, 0, A);
+    }
     if (A[1][0] != 1) {
         for (i=0; i<num_col; i++) 
             temp[i] = A[0][i]*(-A[1][i]) + A[1][i];
