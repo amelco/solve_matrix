@@ -13,7 +13,7 @@ int g_numVar = 0;       // numero de variaveis
 void printHeader();
 void printMenu();
 void printMatriz(float coef[g_numEq][g_numVar]);
-void askCoeficientes(int numEq, float coef[][50]);
+void askCoeficientes(float coef[g_numEq][g_numVar]);
 int countVars(char line[], float coefs[]);
 void str_trim(char* dest, char* source);
 void escalonar(float A[g_numEq][g_numVar], float result[g_numEq][g_numVar]);
@@ -36,7 +36,7 @@ int main() {
             printHeader();
             printf("Quantas equações tem o sistema? [MAX. 50]\n");
             scanf("%d", &g_numEq);
-            askCoeficientes(g_numEq, coef);
+            askCoeficientes(coef);
             // Verificação do problema (INICIO)
             // Logo após leitura dos valores, a matriz coef é preenchida corretamente
             //   obs.: mesmo código da funcao printMatriz()
@@ -60,7 +60,7 @@ int main() {
         
         }
         else if (opcao == '2') {
-            askCoeficientes(g_numEq, coef);
+            askCoeficientes(coef);
         }
         else if (opcao == '3') {
             printHeader();
@@ -118,12 +118,12 @@ void printMatriz(float coef[g_numEq][g_numVar]) {
 }
 
 // pergunta ao usuario os coeficientes das equações
-void askCoeficientes(int numEq, float coef[numEq][50]) {
+void askCoeficientes(float coef[g_numEq][g_numVar]) {
     int i, j;
     char line[200];
     float l_coef[50];
 
-    for (i=0; i<numEq; i++) {
+    for (i=0; i<g_numEq; i++) {
         printf("Digite os coeficientes da equação %d: [MAX. 50]\n", i+1);
         scanf(" %[^\n]", line);
         g_numVar = countVars(line, l_coef);
