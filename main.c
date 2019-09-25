@@ -150,10 +150,11 @@ void askCoeficientes(matriz* coef) {
         printf("Digite os coeficientes da equação %d: [MAX. 50]\n", i+1);
         scanf(" %[^\n]", line.value);
         coef->m = countVars(&line, l_coef);
-        
+        printf("%d\n", coef->m);
         // armazena os coeficientes na matriz de 2 dimensoes
-        for (j=0; j<g_numVar; j++) {
+        for (j=0; j<coef->m; j++) {
             coef->value[i][j] = l_coef[j];
+            printf("%f %f\n", coef->value[i][j], l_coef[j]);
         }
 
         // diz que existem equacoes definidas pelo usuario
